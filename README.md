@@ -9,8 +9,8 @@ Get Started
 -----------
 
 Clone the repo, `git clone git://github.com/cdog/mailman-scratcher.git`, or
-[download the latest release](https://github.com/cdog/mailman-
-scratcher/zipball/master).
+[download the latest release]
+(https://github.com/cdog/mailman-scratcher/zipball/master).
 
 
 
