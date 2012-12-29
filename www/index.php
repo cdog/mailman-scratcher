@@ -40,14 +40,14 @@ case 'hide':
     if (!in_array($id, $config->hidden)) {
         $config->hidden[] = $id;
     }
-    
+
     save_config($config);
     echo 'Ascuns! <a href="./">&laquo; &Icirc;napoi</a>';
     break;
-    
+
 case 'index':
-    $title   = 'Arhiv&#x103; List&#x103;';
-    $banner  = '<h1 class="entry-title">Arhiv&#x103; List&#x103;: ' . $list['title'] .'</h1>';
+    $title  = 'Arhiv&#x103; List&#x103;';
+    $banner = '<h1 class="entry-title">Arhiv&#x103; List&#x103;: ' . $list['title'] .'</h1>';
 
     the_header();
 
@@ -66,13 +66,13 @@ case 'index':
     echo '<hr>';
     the_footer();
     break;
-    
+
 case 'view':
     if (empty($ids)) {
         break;
     }
 
-    $banner  = '<h1 class="entry-title">Vizualizare Articol</h1>';
+    $banner = '<h1 class="entry-title">Vizualizare Articol</h1>';
 
     if ($id == '') {
         $id = $ids[0];
@@ -86,10 +86,9 @@ case 'view':
     break;
 
 case 'page':
-    $title   = 'Arhiv&#x103; List&#x103;';
-    $banner  = '<h1 class="entry-title">Arhiv&#x103;: ' . $list['title'] . '</h1>';
-
-    $start = $page * $post_perpage;
+    $title  = 'Arhiv&#x103; List&#x103;';
+    $banner = '<h1 class="entry-title">Arhiv&#x103;: ' . $list['title'] . '</h1>';
+    $start  = $page * $post_perpage;
 
     the_header();
     the_page_nav($page, $post_perpage, $ids);
@@ -104,8 +103,8 @@ case 'page':
     break;
 
 default:
-    $title   = 'Arhive Liste';
-    $banner  = '<h1 class="entry-title">Arhive Liste</h1>';
+    $title  = 'Arhive Liste';
+    $banner = '<h1 class="entry-title">Arhive Liste</h1>';
 
     the_header();
 

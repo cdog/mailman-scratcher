@@ -4,6 +4,7 @@ function load_config() {
     global $list;
 
     $data = @file_get_contents($list['name'] . '/config.json');
+
     return json_decode($data);
 }
 
@@ -15,18 +16,18 @@ function save_config($data) {
 
 function load_ids() {
     global $config, $list;
-  
+
     $files = @glob($list['name'] . '/articles/*.html');
-    $ids = array();
+    $ids   = array();
 
     foreach ($files as $f) {
-        $str = basename($f);
-        $id = substr($str, 0, strpos($str, '.'));
+        $str   = basename($f);
+        $id    = substr($str, 0, strpos($str, '.'));
         $ids[] = $id;
     }
-  
+
     sort($ids);
-  
+
     if (is_object($config) && is_array($config->hidden)) {
         foreach ($config->hidden as $del) {
             for ($i = 0; $i < count($ids); $i++) {
@@ -51,42 +52,42 @@ function load_post($id) {
         array_shift($lines);
     }
 
-    $n = count($lines) - array_search('        <!--threads-->' . "\n", $lines) + 1;
+    $n = count($lines) - array_search('        <!--threads-->' . PHP_EOL, $lines) + 1;
 
     for ($i = 0; $i < $n; $i++) {
         array_pop($lines);
     }
 
-    $n = array_search('<!--beginarticle-->' . "\n", $lines);
+    $n               = array_search('<!--beginarticle-->' . PHP_EOL, $lines);
 
-    $article_info = array_slice($lines, 0, 6);
-    $article_body = array_slice($lines, $n);
+    $article_info    = array_slice($lines, 0, 6);
+    $article_body    = array_slice($lines, $n);
 
-    $article_info = implode('', $article_info);
-    $article_body = implode('', $article_body);
+    $article_info    = implode('', $article_info);
+    $article_body    = implode('', $article_body);
 
-    $article_begin = substr($article_body, 0, 25);
-    $article_pre = substr($article_body, 25, strlen($article_body) - 60);
-    $article_end = substr($article_body, strlen($article_body) - 35);
+    $article_begin   = substr($article_body, 0, 25);
+    $article_pre     = substr($article_body, 25, strlen($article_body) - 60);
+    $article_end     = substr($article_body, strlen($article_body) - 35);
 
-    $article_body = $article_begin . nl2br($article_pre) . $article_end;
+    $article_body    = $article_begin . nl2br($article_pre) . $article_end;
 
-    $content = $article_info . $article_body;
+    $content         = $article_info . $article_body;
 
-    $post['id'] = $id;
+    $post['id']      = $id;
 
-    $post['title'] = preg_match_all('/<H1>(.*)<\/H1>/', $content, $matches);
-    $post['title'] = $matches[1][0];
+    $post['title']   = preg_match_all('/<H1>(.*)<\/H1>/', $content, $matches);
+    $post['title']   = $matches[1][0];
 
     $post['content'] = $content;
-    $post['content'] = str_replace('<B>',   '<strong>',  $post['content']);
-    $post['content'] = str_replace('</B>',  '</strong>', $post['content']);
-    $post['content'] = str_replace('<H1>',  '<h2>',      $post['content']);
-    $post['content'] = str_replace('</H1>', '</h2>',     $post['content']);
-    $post['content'] = str_replace('<I>',   '<em>',      $post['content']);
-    $post['content'] = str_replace('</I>',  '</em>',     $post['content']);
-    $post['content'] = str_replace('<PRE>',   '<p>',     $post['content']);
-    $post['content'] = str_replace('</PRE>',  '</p>',    $post['content']);
+    $post['content'] = str_replace('<B>',    '<strong>',  $post['content']);
+    $post['content'] = str_replace('</B>',   '</strong>', $post['content']);
+    $post['content'] = str_replace('<H1>',   '<h2>',      $post['content']);
+    $post['content'] = str_replace('</H1>',  '</h2>',     $post['content']);
+    $post['content'] = str_replace('<I>',    '<em>',      $post['content']);
+    $post['content'] = str_replace('</I>',   '</em>',     $post['content']);
+    $post['content'] = str_replace('<PRE>',  '<p>',       $post['content']);
+    $post['content'] = str_replace('</PRE>', '</p>',      $post['content']);
 
     return $post;
 }
@@ -111,7 +112,7 @@ function the_post($post, $ids, $single = true, $element_id = false) {
     }
 
     echo $content;
-  
+
     the_actions($id);
 }
 
@@ -146,7 +147,7 @@ function the_nav($id, $ids) {
 
         $prev = $ids[$i];
     }
- 
+
     echo '<div id="nav-container">';
 
     if ($prev) {
@@ -159,7 +160,7 @@ function the_nav($id, $ids) {
 
     echo '</div><!-- #nav-container -->';
 }
-  
+
 function the_page_nav($page, $perpage, $ids) {
     global $list;
 
@@ -170,7 +171,7 @@ function the_page_nav($page, $perpage, $ids) {
         $prev = $page - 1;
     }
 
-    if (($page+1) * $perpage < count($ids)) {
+    if (($page + 1) * $perpage < count($ids)) {
         $next = $page + 1;
     }
 
